@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Chunghiaxahoi/static/css/main.4e1ad8ab.css",
+    "main.js": "/Chunghiaxahoi/static/js/main.146768b8.js",
+    "static/js/453.81397ac0.chunk.js": "/Chunghiaxahoi/static/js/453.81397ac0.chunk.js",
+    "index.html": "/Chunghiaxahoi/index.html",
+    "main.4e1ad8ab.css.map": "/Chunghiaxahoi/static/css/main.4e1ad8ab.css.map",
+    "main.146768b8.js.map": "/Chunghiaxahoi/static/js/main.146768b8.js.map",
+    "453.81397ac0.chunk.js.map": "/Chunghiaxahoi/static/js/453.81397ac0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4e1ad8ab.css",
+    "static/js/main.146768b8.js"
+  ]
+}
