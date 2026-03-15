@@ -482,7 +482,6 @@ export default function App() {
         <section className="section section--soft" data-id="gallery">
           <div className="container">
             <h2 className="section__title">6. Bộ sưu tập hình ảnh tư liệu</h2>
-            <p className="section__lead">Các hình ảnh minh họa giúp web trực quan hơn khi thuyết trình hoặc nộp bài.</p>
 
             <div className="masonry">
               {GALLERY.map((item, index) => (
