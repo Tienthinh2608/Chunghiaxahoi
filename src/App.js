@@ -13,6 +13,17 @@ const NAV_SECTIONS = [
   { id: 'about', title: 'Kết Luận' },
 ];
 
+// ============================================================
+//  DÁN URL ẢNH VÀO ĐÂY — copy src ảnh trên mạng rồi thay thế
+// ============================================================
+const SECTION_IMAGES = {
+  hero: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrgpO331vRnsahOv36QsF1WbMoH_HMvSbSIA&s',  // Ảnh nền mờ trang bìa (Hero) — dán URL ảnh vào đây
+  phan1: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIyWEAN5f21ZJDZjhKi5NPj6kwNqJKK__sQ&s', // Ảnh minh họa phần 1 — Lý Luận CNXH
+  phan2: 'https://hocluat.vn/wp-content/uploads/2020/02/cach-mang-vo-san.jpg', // Ảnh minh họa phần 2 — Điều Kiện Ra Đời
+  phan3: 'https://file3.qdnd.vn/data/images/0/2023/06/12/phucthang/chu%20nghia%20xa%20hoi.jpg', // Ảnh minh họa phần 3 — Đặc Trưng CNXH
+  phan5: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/West_and_East_Germans_at_the_Brandenburg_Gate_in_1989.jpg/330px-West_and_East_Germans_at_the_Brandenburg_Gate_in_1989.jpg', // Ảnh minh họa phần 5 — Tranh Luận
+};
+
 const TIMELINE_DATA = [
   {
     year: '1985',
@@ -147,6 +158,21 @@ const GALLERY = [
   },
 ];
 
+function SectionImage({ src, alt }) {
+  if (!src) {
+    return (
+      <div className="sec-img sec-img--empty">
+        <span className="sec-img__hint">📷 Dán URL ảnh vào <code>SECTION_IMAGES</code></span>
+      </div>
+    );
+  }
+  return (
+    <div className="sec-img">
+      <img src={src} alt={alt} className="sec-img__el" loading="lazy" />
+    </div>
+  );
+}
+
 function joinClasses(...values) {
   return values.filter(Boolean).join(' ');
 }
@@ -187,9 +213,11 @@ export default function App() {
       <header className={joinClasses('topbar', navSolid && 'topbar--solid')}>
         <div className="container topbar__inner">
           <button className="brand" type="button" onClick={() => scrollToSection('overview')}>
+            <span className="brand__star" aria-hidden="true">★</span>
             <span className="brand__text">CHỦ NGHĨA XÃ HỘI</span>
           </button>
 
+          <div className="topbar__divider" aria-hidden="true" />
           <nav className="nav">
             {NAV_SECTIONS.map((section) => (
               <button
@@ -208,6 +236,13 @@ export default function App() {
       <main>
         {/* HERO */}
         <section className="hero" data-id="overview">
+          {SECTION_IMAGES.hero && (
+            <div
+              className="hero__bg"
+              aria-hidden="true"
+              style={{ backgroundImage: `url(${SECTION_IMAGES.hero})` }}
+            />
+          )}
           <div className="hero__overlay" aria-hidden="true" />
           <div className="container hero__content">
             <h1 className="hero__title">CHỦ NGHĨA XÃ HỘI VÀ SỰ KIỆN LIÊN XÔ - ĐÔNG ÂU SỤP ĐỔ</h1>
@@ -231,42 +266,45 @@ export default function App() {
             <h2 className="section__title">1. Chủ nghĩa xã hội là gì? Khái niệm và vị trí trong lý thuyết hình thái KT-XH</h2>
             <p className="section__lead">Phần lý luận nền tảng của chủ nghĩa xã hội khoa học.</p>
 
-            <div className="bento">
-              <article className="bento__card" style={{ gridColumn: 'span 2' }}>
-                <h3 className="bento__title">1.1. Chủ nghĩa xã hội là gì?</h3>
-                <p className="bento__text">
-                  Chủ nghĩa xã hội là một hình thái kinh tế - xã hội phát triển cao hơn chủ nghĩa tư bản, là giai đoạn đầu
-                  của hình thái cộng sản chủ nghĩa. Trong chủ nghĩa xã hội, tư liệu sản xuất chủ yếu thuộc sở hữu toàn dân
-                  hoặc sở hữu tập thể; giai cấp công nhân cùng nhân dân lao động giữ vai trò làm chủ xã hội; nhà nước mang
-                  bản chất của nhân dân lao động; nền sản xuất được tổ chức trên cơ sở khoa học - công nghệ hiện đại; mục tiêu
-                  là xóa bỏ chế độ người bóc lột người, từng bước thực hiện công bằng xã hội và tạo điều kiện cho con người
-                  phát triển toàn diện.
-                </p>
-              </article>
+            <div className="section__split">
+              <div className="section__split-cards">
+                <div className="bento">
+                  <article className="bento__card" style={{ gridColumn: 'span 2' }}>
+                    <h3 className="bento__title">1.1. Chủ nghĩa xã hội là gì?</h3>
+                    <p className="bento__text">
+                      Chủ nghĩa xã hội là một hình thái kinh tế - xã hội phát triển cao hơn chủ nghĩa tư bản, là giai đoạn đầu
+                      của hình thái cộng sản chủ nghĩa. Trong chủ nghĩa xã hội, tư liệu sản xuất chủ yếu thuộc sở hữu toàn dân
+                      hoặc sở hữu tập thể; giai cấp công nhân cùng nhân dân lao động giữ vai trò làm chủ xã hội; nhà nước mang
+                      bản chất của nhân dân lao động; nền sản xuất được tổ chức trên cơ sở khoa học - công nghệ hiện đại; mục tiêu
+                      là xóa bỏ chế độ người bóc lột người, từng bước thực hiện công bằng xã hội và tạo điều kiện cho con người
+                      phát triển toàn diện.
+                    </p>
+                  </article>
 
-              <article className="bento__card" style={{ gridColumn: 'span 2' }}>
-                <h3 className="bento__title">1.2. Khái niệm và vị trí của CNXH trong lý thuyết hình thái KT-XH</h3>
-                <p className="bento__text">
-                  Theo học thuyết hình thái kinh tế - xã hội của chủ nghĩa Mác - Lênin, lịch sử loài người phát triển thông qua
-                  các hình thái kinh tế - xã hội cơ bản: cộng sản nguyên thủy, chiếm hữu nô lệ, phong kiến, tư bản chủ nghĩa và
-                  cộng sản chủ nghĩa. Trong đó, chủ nghĩa xã hội là giai đoạn thấp (giai đoạn đầu) của hình thái cộng sản chủ nghĩa.
-                  Nó giữ vị trí là bước chuyển tiếp tất yếu từ chủ nghĩa tư bản lên chủ nghĩa cộng sản hoàn chỉnh, nơi vẫn còn dấu vết
-                  của xã hội cũ nhưng đã hình thành những nền tảng căn bản của xã hội mới.
-                </p>
-              </article>
+                  <article className="bento__card" style={{ gridColumn: 'span 2' }}>
+                    <h3 className="bento__title">1.2. Khái niệm và vị trí của CNXH trong lý thuyết hình thái KT-XH</h3>
+                    <p className="bento__text">
+                      Theo học thuyết hình thái kinh tế - xã hội của chủ nghĩa Mác - Lênin, lịch sử loài người phát triển thông qua
+                      các hình thái kinh tế - xã hội cơ bản: cộng sản nguyên thủy, chiếm hữu nô lệ, phong kiến, tư bản chủ nghĩa và
+                      cộng sản chủ nghĩa. Trong đó, chủ nghĩa xã hội là giai đoạn thấp (giai đoạn đầu) của hình thái cộng sản chủ nghĩa.
+                      Nó giữ vị trí là bước chuyển tiếp tất yếu từ chủ nghĩa tư bản lên chủ nghĩa cộng sản hoàn chỉnh, nơi vẫn còn dấu vết
+                      của xã hội cũ nhưng đã hình thành những nền tảng căn bản của xã hội mới.
+                    </p>
+                  </article>
 
-              <article className="bento__card" style={{ gridColumn: 'span 4' }}>
-                <h3 className="bento__title">1.3. Quá trình lịch sử tự nhiên</h3>
-                <p className="bento__text">
-                  Chủ nghĩa Mác - Lênin khẳng định sự phát triển của xã hội loài người là một quá trình lịch sử tự nhiên.
-                  Nghĩa là sự thay thế từ hình thái kinh tế - xã hội này sang hình thái khác không phải do ý muốn chủ quan của cá nhân
-                  hay giai cấp nào, mà do sự vận động khách quan của mâu thuẫn giữa lực lượng sản xuất và quan hệ sản xuất.
-                  Khi lực lượng sản xuất phát triển đến mức quan hệ sản xuất cũ trở nên lỗi thời, kìm hãm sự phát triển,
-                  thì tất yếu nảy sinh yêu cầu cải biến cách mạng để xác lập quan hệ sản xuất mới phù hợp hơn. Trong bối cảnh đó,
-                  chủ nghĩa xã hội ra đời như một tất yếu lịch sử sau chủ nghĩa tư bản, xuất phát từ chính những mâu thuẫn nội tại
-                  của chủ nghĩa tư bản hiện đại.
-                </p>
-              </article>
+                  <article className="bento__card" style={{ gridColumn: 'span 2' }}>
+                    <h3 className="bento__title">1.3. Quá trình lịch sử tự nhiên</h3>
+                    <p className="bento__text">
+                      Chủ nghĩa Mác - Lênin khẳng định sự phát triển của xã hội loài người là một quá trình lịch sử tự nhiên.
+                      Nghĩa là sự thay thế từ hình thái kinh tế - xã hội này sang hình thái khác không phải do ý muốn chủ quan của cá nhân
+                      hay giai cấp nào, mà do sự vận động khách quan của mâu thuẫn giữa lực lượng sản xuất và quan hệ sản xuất.
+                      Khi lực lượng sản xuất phát triển đến mức quan hệ sản xuất cũ trở nên lỗi thời, kìm hãm sự phát triển,
+                      thì tất yếu nảy sinh yêu cầu cải biến cách mạng để xác lập quan hệ sản xuất mới phù hợp hơn.
+                    </p>
+                  </article>
+                </div>
+              </div>
+              <SectionImage src={SECTION_IMAGES.phan1} alt="Lý luận chủ nghĩa xã hội" />
             </div>
           </div>
         </section>
@@ -277,33 +315,37 @@ export default function App() {
             <h2 className="section__title">2. Điều kiện ra đời của chủ nghĩa xã hội</h2>
             <p className="section__lead">Bao gồm điều kiện kinh tế và điều kiện chính trị - xã hội.</p>
 
-            <div className="bento">
-              <article className="bento__card" style={{ gridColumn: 'span 2' }}>
-                <h3 className="bento__title">2.1. Điều kiện kinh tế</h3>
-                <p className="bento__text">
-                  Điều kiện kinh tế cho sự ra đời của chủ nghĩa xã hội trước hết là sự phát triển cao của lực lượng sản xuất trong
-                  lòng xã hội tư bản chủ nghĩa. Chủ nghĩa tư bản đã tạo ra nền đại công nghiệp, phân công lao động xã hội sâu sắc,
-                  trình độ xã hội hóa sản xuất ngày càng cao, ứng dụng mạnh mẽ khoa học - công nghệ vào sản xuất. Tuy nhiên,
-                  quan hệ sản xuất tư bản chủ nghĩa dựa trên chế độ chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất lại làm
-                  nảy sinh mâu thuẫn cơ bản giữa tính chất xã hội hóa cao của sản xuất với chế độ chiếm hữu tư nhân về kết quả lao động.
-                  Mâu thuẫn này biểu hiện qua khủng hoảng kinh tế chu kỳ, thất nghiệp, phân hóa giàu nghèo, bóc lột lao động làm thuê
-                  và bất công xã hội. Chính mâu thuẫn đó đặt ra yêu cầu khách quan phải xây dựng một phương thức sản xuất mới tiến bộ hơn,
-                  đó là chủ nghĩa xã hội.
-                </p>
-              </article>
+            <div className="section__split section__split--reverse">
+              <SectionImage src={SECTION_IMAGES.phan2} alt="Điều kiện ra đời CNXH" />
+              <div className="section__split-cards">
+                <div className="bento">
+                  <article className="bento__card" style={{ gridColumn: 'span 2' }}>
+                    <h3 className="bento__title">2.1. Điều kiện kinh tế</h3>
+                    <p className="bento__text">
+                      Điều kiện kinh tế cho sự ra đời của chủ nghĩa xã hội trước hết là sự phát triển cao của lực lượng sản xuất trong
+                      lòng xã hội tư bản chủ nghĩa. Chủ nghĩa tư bản đã tạo ra nền đại công nghiệp, phân công lao động xã hội sâu sắc,
+                      trình độ xã hội hóa sản xuất ngày càng cao, ứng dụng mạnh mẽ khoa học - công nghệ vào sản xuất. Tuy nhiên,
+                      quan hệ sản xuất tư bản chủ nghĩa dựa trên chế độ chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất lại làm
+                      nảy sinh mâu thuẫn cơ bản giữa tính chất xã hội hóa cao của sản xuất với chế độ chiếm hữu tư nhân về kết quả lao động.
+                      Mâu thuẫn này biểu hiện qua khủng hoảng kinh tế chu kỳ, thất nghiệp, phân hóa giàu nghèo, bóc lột lao động làm thuê
+                      và bất công xã hội.
+                    </p>
+                  </article>
 
-              <article className="bento__card" style={{ gridColumn: 'span 2' }}>
-                <h3 className="bento__title">2.2. Điều kiện chính trị - xã hội</h3>
-                <p className="bento__text">
-                  Về chính trị - xã hội, điều kiện ra đời của chủ nghĩa xã hội là sự trưởng thành của giai cấp công nhân hiện đại -
-                  lực lượng xã hội gắn liền với nền đại công nghiệp và đại diện cho phương thức sản xuất tiên tiến. Trong quá trình
-                  phát triển của chủ nghĩa tư bản, giai cấp công nhân ngày càng đông đảo, có tính tổ chức, tính kỷ luật và tinh thần
-                  đoàn kết cao. Đồng thời, mâu thuẫn giữa giai cấp công nhân với giai cấp tư sản ngày càng gay gắt, thúc đẩy phong trào
-                  đấu tranh của giai cấp công nhân từ tự phát đến tự giác. Khi được soi sáng bởi chủ nghĩa Mác - Lênin và được tổ chức
-                  dưới sự lãnh đạo của Đảng Cộng sản, giai cấp công nhân trở thành lực lượng chính trị có khả năng lãnh đạo nhân dân lao động
-                  tiến hành cách mạng xã hội chủ nghĩa, lật đổ chế độ tư bản chủ nghĩa và xây dựng xã hội mới.
-                </p>
-              </article>
+                  <article className="bento__card" style={{ gridColumn: 'span 2' }}>
+                    <h3 className="bento__title">2.2. Điều kiện chính trị - xã hội</h3>
+                    <p className="bento__text">
+                      Về chính trị - xã hội, điều kiện ra đời của chủ nghĩa xã hội là sự trưởng thành của giai cấp công nhân hiện đại -
+                      lực lượng xã hội gắn liền với nền đại công nghiệp và đại diện cho phương thức sản xuất tiên tiến. Trong quá trình
+                      phát triển của chủ nghĩa tư bản, giai cấp công nhân ngày càng đông đảo, có tính tổ chức, tính kỷ luật và tinh thần
+                      đoàn kết cao. Đồng thời, mâu thuẫn giữa giai cấp công nhân với giai cấp tư sản ngày càng gay gắt, thúc đẩy phong trào
+                      đấu tranh của giai cấp công nhân từ tự phát đến tự giác. Khi được soi sáng bởi chủ nghĩa Mác - Lênin và được tổ chức
+                      dưới sự lãnh đạo của Đảng Cộng sản, giai cấp công nhân trở thành lực lượng chính trị có khả năng lãnh đạo nhân dân lao động
+                      tiến hành cách mạng xã hội chủ nghĩa, lật đổ chế độ tư bản chủ nghĩa và xây dựng xã hội mới.
+                    </p>
+                  </article>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -314,7 +356,11 @@ export default function App() {
             <h2 className="section__title">3. Những đặc trưng bản chất của chủ nghĩa xã hội</h2>
             <p className="section__lead">Những dấu hiệu cơ bản phản ánh bản chất của xã hội xã hội chủ nghĩa.</p>
 
-            <div className="bento">
+            <div className="section__banner">
+              <SectionImage src={SECTION_IMAGES.phan3} alt="Đặc trưng chủ nghĩa xã hội" />
+            </div>
+
+            <div className="bento" style={{ marginTop: '1.5rem' }}>
               <article className="bento__card">
                 <h3 className="bento__title">Chế độ công hữu về TLSX chủ yếu</h3>
                 <p className="bento__text">
@@ -407,7 +453,11 @@ export default function App() {
             <h2 className="section__title">5. Tranh luận: Liên Xô - Đông Âu tan rã có phải là sự sụp đổ của CNXH?</h2>
             <p className="section__lead">Phân tích quan điểm và đưa ra lập luận phản bác một cách khoa học.</p>
 
-            <div className="bento">
+            <div className="section__banner">
+              <SectionImage src={SECTION_IMAGES.phan5} alt="Tranh luận về sự sụp đổ CNXH" />
+            </div>
+
+            <div className="bento" style={{ marginTop: '1.5rem' }}>
               <article className="bento__card" style={{ gridColumn: 'span 4' }}>
                 <h3 className="bento__title">5.1. Ý kiến đang được đặt ra</h3>
                 <p className="bento__text">
